@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Debouncing Practice in JS</title>
+    </head>
+    <body>
+        <label for="name">Enter your name</label>
+        <input type="text" name="name" id="name" oninput="check()" />
+        <p id="gender"></p>
+
+        <script>
+            const apiURL = "https://api.genderize.io?name=";
+            var timer = null;
+
+            function check() {
+                let name = document.getElementById("name").value;
+                clearTimeout(timer);
+                timer = setTimeout(() => {
+                    debounce(name);
+                }, 1500);
+            }
+
+            async function debounce(name) {
+                let callApi = await fetch(apiURL + name);
+                let data = await callApi.json();
+                document.getElementById("gender").innerHTML = data.gender;
+            }
+        </script>
+    </body>
+</html>
